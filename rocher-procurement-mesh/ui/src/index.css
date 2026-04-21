@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-low { @apply bg-green-100 text-green-800; }
+  .badge-moderate { @apply bg-yellow-100 text-yellow-800; }
+  .badge-elevated { @apply bg-orange-100 text-orange-800; }
+  .badge-high { @apply bg-red-100 text-red-800; }
+  .badge-critical { @apply bg-red-200 text-red-900 ring-1 ring-red-400; }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-5;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-rocher-700 text-white rounded-lg
+           hover:bg-rocher-800 transition-colors text-sm font-medium;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-lg
+           border border-gray-300 hover:bg-gray-50 transition-colors text-sm font-medium;
+  }
+}
+
+/* SSE event animation */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.event-enter {
+  animation: slideIn 0.3s ease-out;
+}

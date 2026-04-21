@@ -1,0 +1,134 @@
+# Risk & Web Intelligence Agent (Gemini-powered)
+# Uses Google Gemini for web research and reasoning.
+# Monitors weather, geopolitics, logistics, and export signals.
+
+namespace: ${NAMESPACE}
+shared_config:
+  - ../shared_config.yaml
+
+components:
+  - component_type: A2A_ADK_HostComponent
+    component_name: RiskWebIntelligenceAgent
+    component_module: src.solace_agent_mesh.agent.sac.app
+
+    configuration:
+      agent_description: >
+        Gemini-powered risk and web intelligence agent for procurement.
+        Researches weather events, geopolitical risks, logistics disruptions,
+        and export/trade signals that affect raw-material sourcing for
+        the procurement team.
+
+      allow_list:
+        - "ProcurementAdvisorAgent"
+        - "MarketIntelligenceAgent"
+
+      request_timeout_seconds: 120
+
+      # Explicitly use Gemini model
+      agent_model:
+        type: "gemini"
+
+      agent_planning_model:
+        type: "gemini"
+
+      max_llm_calls: 20
+
+      enable_streaming: true
+      event_streaming:
+        publish_interval_ms: 300
+
+      session_service:
+        type: "sql"
+        database_url: "sqlite:///risk_agent_sessions.db"
+
+      agent_discovery:
+        enabled: true
+        interval_seconds: 10
+
+      # Subscribe to external risk feeds
+      event_subscriptions:
+        - topic: "sam/procurement/risk/weather/>"
+          description: "Weather events for sourcing regions"
+        - topic: "sam/procurement/risk/geopolitics/>"
+          description: "Geopolitical and trade signals"
+        - topic: "sam/procurement/risk/logistics/>"
+          description: "Shipping and logistics disruptions"
+
+      # Publish risk assessments
+      event_publications:
+        - topic: "sam/procurement/risk/material/{material}"
+          description: "Risk assessment per material"
+        - topic: "sam/procurement/risk/alerts"
+          description: "High-priority risk alerts"
+
+      tools:
+        - name: "web_search"
+          type: "web_search_tool"
+          config:
+            providers:
+              - google
+            max_results: 10
+
+        - name: "risk_scoring"
+          type: "custom"
+          config:
+            risk_categories:
+              - weather
+              - geopolitics
+              - logistics
+              - trade_policy
+              - currency
+            severity_levels:
+              - low
+              - moderate
+              - elevated
+              - high
+              - critical
+
+      agent_card:
+        instructions: |
+          You are the Risk & Web Intelligence Agent for the procurement team procurement.
+          You are powered by Google Gemini and specialize in web research and risk analysis.
+
+          ROLE:
+          - Research and monitor external risk signals for raw-material sourcing regions
+          - Interpret weather events that affect crop yields and harvests
+          - Track geopolitical developments that could disrupt supply chains
+          - Monitor logistics/shipping conditions and port congestion
+          - Detect export restrictions, tariff changes, or trade policy shifts
+          - Assess currency instability in sourcing countries
+
+          SOURCING REGIONS & RISK CONTEXT:
+          - Morocco (Argan oil): drought risk, political stability generally good, MAD/EUR exposure
+          - West Africa / Burkina Faso / Ghana (Shea butter): political instability, poor infrastructure, seasonal floods
+          - Bulgaria (Rose extract): EU member, low risk, but very narrow harvest window
+          - USA / Arizona (Jojoba oil): low risk, but USD/EUR FX matters
+          - Madagascar (Vanilla): VERY HIGH RISK — cyclones, theft, price manipulation, weak infrastructure
+          - India / Madhya Pradesh (Palmarosa oil): monsoon dependency, occasional export controls
+
+          WHEN YOU RECEIVE A RISK FEED EVENT:
+          1. Use web search to find corroborating or contradicting information
+          2. Assess severity and confidence based on multiple sources
+          3. Determine which materials and suppliers are affected
+          4. Estimate timeline of impact (immediate, weeks, months)
+          5. Suggest a procurement action: watch | escalate | hedge | accelerate_purchase | diversify_supplier
+
+          OUTPUT FORMAT (JSON):
+          - risk_id: string (unique identifier)
+          - risk_type: "weather" | "geopolitics" | "logistics" | "trade_policy" | "currency"
+          - region: string
+          - affected_materials: list of strings
+          - severity: "low" | "moderate" | "elevated" | "high" | "critical"
+          - confidence: 0.0-1.0
+          - headline: string (1 line)
+          - narrative: string (2-4 sentences explaining what is happening and why it matters)
+          - sources: list of strings (URLs or source names)
+          - recommended_action: "watch" | "escalate" | "hedge" | "accelerate_purchase" | "diversify_supplier"
+          - time_horizon: "immediate" | "days" | "weeks" | "months"
+          - updated_at: ISO timestamp
+
+          IMPORTANT:
+          - Always cite sources. Never fabricate information.
+          - Clearly distinguish confirmed facts from forecasts/estimates.
+          - Use confidence scores honestly — 0.5 if uncertain, 0.9+ only with strong evidence.
+          - This agent is Gemini-powered: leverage your web search and grounding capabilities.

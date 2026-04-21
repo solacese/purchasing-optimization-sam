@@ -1,0 +1,79 @@
+{
+  "description": "2025 demand forecast by material — Company procurement planning",
+  "forecast_date": "2025-01-15",
+  "confidence": "medium",
+  "materials": {
+    "argan_oil": {
+      "annual_forecast_kg": 14000,
+      "growth_vs_2024": "+16.7%",
+      "driver": "New body care line launching Q2 2025",
+      "quarterly_forecast": {
+        "Q1": 2800, "Q2": 4200, "Q3": 3800, "Q4": 3200
+      },
+      "safety_stock_weeks": 4,
+      "current_inventory_kg": 3200,
+      "coverage_weeks_at_forecast": 5.3,
+      "reorder_point_kg": 2700
+    },
+    "shea_butter": {
+      "annual_forecast_kg": 28000,
+      "growth_vs_2024": "+12.0%",
+      "driver": "Expanded distribution in DACH markets",
+      "quarterly_forecast": {
+        "Q1": 6500, "Q2": 7800, "Q3": 7200, "Q4": 6500
+      },
+      "safety_stock_weeks": 6,
+      "current_inventory_kg": 9500,
+      "coverage_weeks_at_forecast": 8.8,
+      "reorder_point_kg": 3200
+    },
+    "rose_extract": {
+      "annual_forecast_kg": 900,
+      "growth_vs_2024": "+12.5%",
+      "driver": "Premium fragrance reformulation",
+      "quarterly_forecast": {
+        "Q1": 160, "Q2": 300, "Q3": 260, "Q4": 180
+      },
+      "safety_stock_weeks": 8,
+      "current_inventory_kg": 180,
+      "coverage_weeks_at_forecast": 10.4,
+      "reorder_point_kg": 140
+    },
+    "jojoba_oil": {
+      "annual_forecast_kg": 9000,
+      "growth_vs_2024": "+12.5%",
+      "driver": "Hair care product expansion",
+      "quarterly_forecast": {
+        "Q1": 2100, "Q2": 2400, "Q3": 2300, "Q4": 2200
+      },
+      "safety_stock_weeks": 4,
+      "current_inventory_kg": 2800,
+      "coverage_weeks_at_forecast": 6.4,
+      "reorder_point_kg": 1700
+    },
+    "vanilla": {
+      "annual_forecast_kg": 1800,
+      "growth_vs_2024": "+20.0%",
+      "driver": "Fragrance line growth and new candle range",
+      "quarterly_forecast": {
+        "Q1": 380, "Q2": 500, "Q3": 480, "Q4": 440
+      },
+      "safety_stock_weeks": 6,
+      "current_inventory_kg": 420,
+      "coverage_weeks_at_forecast": 6.1,
+      "reorder_point_kg": 210
+    },
+    "palmarosa_oil": {
+      "annual_forecast_kg": 3500,
+      "growth_vs_2024": "+16.7%",
+      "driver": "Natural deodorant line scale-up",
+      "quarterly_forecast": {
+        "Q1": 750, "Q2": 950, "Q3": 950, "Q4": 850
+      },
+      "safety_stock_weeks": 5,
+      "current_inventory_kg": 800,
+      "coverage_weeks_at_forecast": 5.9,
+      "reorder_point_kg": 340
+    }
+  }
+}

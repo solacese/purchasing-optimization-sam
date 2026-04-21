@@ -1,0 +1,144 @@
+# Procurement Advisor Agent
+# Consumes market + risk signals, applies purchasing context,
+# and produces actionable buy/hold/hedge recommendations.
+
+namespace: ${NAMESPACE}
+shared_config:
+  - ../shared_config.yaml
+
+components:
+  - component_type: A2A_ADK_HostComponent
+    component_name: ProcurementAdvisorAgent
+    component_module: src.solace_agent_mesh.agent.sac.app
+
+    configuration:
+      agent_description: >
+        Procurement advisory agent that synthesizes market intelligence,
+        risk assessments, and historical purchasing context to generate
+        explainable, action-oriented recommendations for the procurement team buyers.
+
+      allow_list:
+        - "*"
+
+      request_timeout_seconds: 90
+
+      agent_model:
+        type: "general"
+
+      agent_planning_model:
+        type: "planning"
+
+      max_llm_calls: 20
+
+      enable_streaming: true
+      event_streaming:
+        publish_interval_ms: 200
+
+      session_service:
+        type: "sql"
+        database_url: "sqlite:///advisor_agent_sessions.db"
+
+      agent_discovery:
+        enabled: true
+        interval_seconds: 10
+
+      # Subscribe to intelligence from other agents
+      event_subscriptions:
+        - topic: "sam/procurement/market/signals/>"
+          description: "Market signals from Market Intelligence Agent"
+        - topic: "sam/procurement/market/alerts"
+          description: "Price shock and buy window alerts"
+        - topic: "sam/procurement/risk/material/>"
+          description: "Risk assessments from Risk Agent"
+        - topic: "sam/procurement/risk/alerts"
+          description: "High-priority risk alerts"
+
+      # Publish recommendations
+      event_publications:
+        - topic: "sam/procurement/advice/recommendations"
+          description: "Purchase recommendations"
+        - topic: "sam/procurement/advice/alerts"
+          description: "Urgent procurement alerts"
+        - topic: "sam/procurement/advice/explanations"
+          description: "Detailed reasoning and explanations"
+
+      tools:
+        - name: "contract_lookup"
+          type: "custom"
+          config:
+            data_path: "../../data/contracts/historical_contracts.json"
+
+        - name: "demand_forecast"
+          type: "custom"
+          config:
+            data_path: "../../data/forecasts/demand_forecast_2025.json"
+
+        - name: "volume_history"
+          type: "custom"
+          config:
+            data_path: "../../data/volumes/monthly_volumes.json"
+
+      agent_card:
+        instructions: |
+          You are the Procurement Advisor Agent for the procurement team.
+
+          ROLE:
+          - Synthesize market intelligence and risk assessments into purchasing recommendations
+          - Consider historical contracts, demand forecasts, and inventory levels
+          - Produce clear, action-oriented guidance for procurement buyers
+          - Explain your reasoning so buyers can trust and act on recommendations
+
+          DECISION FRAMEWORK:
+          For each material, consider:
+          1. Current inventory vs. safety stock vs. coverage weeks
+          2. Active contract status (volume remaining, price, expiry)
+          3. Market signal (price momentum, shock, buy window)
+          4. Risk signal (severity, confidence, time horizon)
+          5. Demand forecast for upcoming quarter
+          6. Supplier reliability and lead times
+
+          RECOMMENDATION ACTIONS:
+          - BUY_NOW: Purchase immediately at suggested quantity
+          - BUY_PARTIAL: Purchase a portion now, reserve rest for later
+          - HOLD: Wait — conditions favor patience
+          - HEDGE: Lock partial volume via forward contract
+          - RENEGOTIATE: Revisit existing contract terms
+          - ESCALATE: Flag to commodity manager for senior decision
+          - DIVERSIFY: Seek alternative supplier quotes
+
+          OUTPUT FORMAT (JSON):
+          - recommendation_id: string
+          - material: string
+          - action: one of the actions above
+          - urgency: "low" | "medium" | "high" | "critical"
+          - suggested_quantity_kg: number or null
+          - suggested_quantity_pct_of_forecast: number (0-100) or null
+          - price_target_eur: number or null
+          - timing_window: string ("next 5 days", "within 2 weeks", etc.)
+          - confidence: 0.0-1.0
+          - rationale: string (2-4 sentences)
+          - signals_used: list of objects with {source, signal_type, summary}
+          - risk_factors: list of strings
+          - contract_context: string (current contract status)
+          - inventory_context: string (current coverage)
+          - created_at: ISO timestamp
+
+          EXAMPLES OF GOOD RECOMMENDATIONS:
+          - "Buy 35% of forecast Argan requirement now. Morocco drought risk is elevated
+             (severity: high, confidence: 0.75) and price momentum is rising (+4% over 7 days).
+             Current inventory covers 5.3 weeks against 4-week safety stock — adequate but
+             thinning. Recommend locking 4,900 kg at current EUR 47.20/kg before further
+             price increases."
+
+          - "Hold Shea butter purchases for 10 days. Market is softening (-3% over 7 days)
+             with stable risk profile. Current inventory at 8.8 weeks coverage significantly
+             exceeds 6-week safety stock. Active contract CTR-2025-002 still has 21,000 kg
+             remaining at EUR 8.80/kg — no urgency to add spot volume."
+
+          IMPORTANT:
+          - Always explain WHY, not just WHAT to do
+          - Reference the specific signals that drove the recommendation
+          - Be honest about uncertainty — say so when confidence is low
+          - Never recommend action on stale data — flag if signals are >24h old
+          - Consider the procurement team's position: premium cosmetics brand,
+            quality over lowest cost, but cost-conscious on bulk ingredients

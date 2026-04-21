@@ -1,0 +1,50 @@
+# REST API Gateway for Procurement Intelligence Mesh
+# Exposes agent capabilities and event streams to the UI
+
+namespace: ${NAMESPACE}
+shared_config:
+  - ../shared_config.yaml
+
+components:
+  - component_type: RestApiGatewayApp
+    component_name: ProcurementRestGateway
+    component_module: solace_ai_connector.gateway.generic.rest_api_gateway_adapter
+
+    configuration:
+      host: "0.0.0.0"
+      port: 8088
+
+      artifact_service:
+        type: "filesystem"
+        base_path: /tmp/procurement-sam
+        base_namespace: ${NAMESPACE}
+
+      enable_authentication: false
+
+      authentication:
+        dev_user_identity: "demo_user"
+
+      cors_origins:
+        - "http://localhost:5173"
+        - "http://localhost:3000"
+        - "http://localhost:8090"
+
+      logging:
+        level: ${LOG_LEVEL:INFO}
+
+  - component_type: PlatformService
+    component_name: ProcurementPlatformService
+    component_module: solace_agent_mesh.platform_service.app
+
+    configuration:
+      host: "localhost"
+      port: 8001
+
+      database_url: "sqlite:///procurement_platform.db"
+
+      cors_origins:
+        - "http://localhost:5173"
+        - "http://localhost:3000"
+        - "http://localhost:8090"
+
+      oauth_enabled: false

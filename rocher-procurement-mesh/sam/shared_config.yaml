@@ -1,0 +1,43 @@
+# Shared configuration for all Procurement Intelligence Mesh agents
+# Referenced by each agent YAML via shared_config directive
+#
+# All models route through a LiteLLM proxy at ${LITELLM_BASE_URL}
+# which handles provider routing (Azure OpenAI, Gemini, Bedrock, etc.)
+
+broker:
+  type: solace
+  url: ${SOLACE_BROKER_URL}
+  username: ${SOLACE_BROKER_USERNAME}
+  password: ${SOLACE_BROKER_PASSWORD}
+  vpn: ${SOLACE_BROKER_VPN}
+  reconnect_retries: 5
+  reconnect_wait_seconds: 3
+
+models:
+  general:
+    provider: litellm
+    model: ${LITELLM_GENERAL_MODEL}
+    api_key: ${LITELLM_API_KEY}
+    api_base: ${LITELLM_BASE_URL}
+    temperature: 0.3
+    max_tokens: 4096
+
+  planning:
+    provider: litellm
+    model: ${LITELLM_PLANNING_MODEL}
+    api_key: ${LITELLM_API_KEY}
+    api_base: ${LITELLM_BASE_URL}
+    temperature: 0.2
+    max_tokens: 4096
+
+  gemini:
+    provider: litellm
+    model: ${LITELLM_GEMINI_MODEL}
+    api_key: ${LITELLM_API_KEY}
+    api_base: ${LITELLM_BASE_URL}
+    temperature: 0.3
+    max_tokens: 4096
+
+logging:
+  level: ${LOG_LEVEL:INFO}
+  format: "%(asctime)s [%(name)s] %(levelname)s: %(message)s"

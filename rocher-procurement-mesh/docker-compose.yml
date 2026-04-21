@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+  # ── Solace PubSub+ Event Broker ──────────────────────────
+  solace-broker:
+    image: solace/solace-pubsub-standard:latest
+    container_name: sam-solace
+    ports:
+      - "8008:8008"   # WebSocket (SEMP + Messaging)
+      - "1883:1883"   # MQTT
+      - "5672:5672"   # AMQP
+      - "8080:8080"   # Management console
+      - "55554:55555" # SMF
+    environment:
+      username_admin_globalaccesslevel: admin
+      username_admin_password: admin
+      system_scaling_maxconnectioncount: 100
+    shm_size: 1g
+    ulimits:
+      core: -1
+      nofile:
+        soft: 2448
+        hard: 6592
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - solace-data:/var/lib/solace
+
+  # ── Procurement API Gateway ──────────────────────────────
+  procurement-api:
+    build:
+      context: ./services/procurement-api
+      dockerfile: Dockerfile
+    container_name: sam-api
+    ports:
+      - "8090:8090"
+    environment:
+      - SOLACE_BROKER_URL=ws://solace-broker:8008
+      - SOLACE_BROKER_USERNAME=default
+      - SOLACE_BROKER_PASSWORD=default
+      - SOLACE_BROKER_VPN=default
+    depends_on:
+      solace-broker:
+        condition: service_healthy
+
+  # ── Price Feed Simulator ─────────────────────────────────
+  price-feed-simulator:
+    build:
+      context: ./services/price-feed-simulator
+      dockerfile: Dockerfile
+    container_name: sam-price-feed
+    environment:
+      - SOLACE_BROKER_URL=ws://solace-broker:8008
+      - SOLACE_BROKER_USERNAME=default
+      - SOLACE_BROKER_PASSWORD=default
+      - SOLACE_BROKER_VPN=default
+    depends_on:
+      solace-broker:
+        condition: service_healthy
+
+  # ── Risk Feed Simulator ──────────────────────────────────
+  risk-feed-simulator:
+    build:
+      context: ./services/risk-feed-simulator
+      dockerfile: Dockerfile
+    container_name: sam-risk-feed
+    environment:
+      - SOLACE_BROKER_URL=ws://solace-broker:8008
+      - SOLACE_BROKER_USERNAME=default
+      - SOLACE_BROKER_PASSWORD=default
+      - SOLACE_BROKER_VPN=default
+    depends_on:
+      solace-broker:
+        condition: service_healthy
+
+volumes:
+  solace-data:

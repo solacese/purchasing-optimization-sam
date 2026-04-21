@@ -1,0 +1,66 @@
+{
+  "description": "Historical monthly purchasing volumes in kg — Company raw materials",
+  "year": 2024,
+  "materials": {
+    "argan_oil": {
+      "unit": "kg",
+      "annual_total": 12000,
+      "monthly": {
+        "jan": 800, "feb": 900, "mar": 1100, "apr": 1200,
+        "may": 1300, "jun": 1100, "jul": 900, "aug": 800,
+        "sep": 1000, "oct": 1100, "nov": 1000, "dec": 800
+      },
+      "notes": "Peak in spring for summer product lines"
+    },
+    "shea_butter": {
+      "unit": "kg",
+      "annual_total": 25000,
+      "monthly": {
+        "jan": 1800, "feb": 2000, "mar": 2200, "apr": 2300,
+        "may": 2400, "jun": 2200, "jul": 2000, "aug": 1800,
+        "sep": 2100, "oct": 2200, "nov": 2100, "dec": 1900
+      },
+      "notes": "Relatively stable demand, slight peak in spring"
+    },
+    "rose_extract": {
+      "unit": "kg",
+      "annual_total": 800,
+      "monthly": {
+        "jan": 50, "feb": 60, "mar": 70, "apr": 80,
+        "may": 90, "jun": 100, "jul": 80, "aug": 60,
+        "sep": 60, "oct": 50, "nov": 50, "dec": 50
+      },
+      "notes": "Harvest-constrained. Most purchasing happens May-July from fresh distillation."
+    },
+    "jojoba_oil": {
+      "unit": "kg",
+      "annual_total": 8000,
+      "monthly": {
+        "jan": 600, "feb": 650, "mar": 700, "apr": 700,
+        "may": 700, "jun": 700, "jul": 650, "aug": 650,
+        "sep": 700, "oct": 650, "nov": 650, "dec": 650
+      },
+      "notes": "Very stable demand. Year-round availability."
+    },
+    "vanilla": {
+      "unit": "kg",
+      "annual_total": 1500,
+      "monthly": {
+        "jan": 100, "feb": 100, "mar": 120, "apr": 130,
+        "may": 150, "jun": 150, "jul": 140, "aug": 130,
+        "sep": 120, "oct": 120, "nov": 120, "dec": 120
+      },
+      "notes": "Steady demand, significant price volatility."
+    },
+    "palmarosa_oil": {
+      "unit": "kg",
+      "annual_total": 3000,
+      "monthly": {
+        "jan": 200, "feb": 220, "mar": 250, "apr": 280,
+        "may": 300, "jun": 280, "jul": 260, "aug": 240,
+        "sep": 250, "oct": 250, "nov": 230, "dec": 240
+      },
+      "notes": "Moderate seasonality. Indian harvest Aug-Oct."
+    }
+  }
+}

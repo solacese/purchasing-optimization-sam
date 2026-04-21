@@ -1,0 +1,106 @@
+# Market Intelligence Agent
+# Listens to raw-material price feeds and FX changes.
+# Detects unusual movements and buy-window opportunities.
+
+namespace: ${NAMESPACE}
+shared_config:
+  - ../shared_config.yaml
+
+components:
+  - component_type: A2A_ADK_HostComponent
+    component_name: MarketIntelligenceAgent
+    component_module: src.solace_agent_mesh.agent.sac.app
+
+    configuration:
+      agent_description: >
+        Commodity market intelligence agent for the procurement team procurement.
+        Monitors raw-material prices, FX rates, and shipping costs.
+        Detects price shocks, trend shifts, and favorable buy windows.
+
+      allow_list:
+        - "ProcurementAdvisorAgent"
+
+      request_timeout_seconds: 60
+
+      agent_model:
+        type: "general"
+
+      agent_planning_model:
+        type: "planning"
+
+      max_llm_calls: 15
+
+      enable_streaming: true
+      event_streaming:
+        publish_interval_ms: 200
+
+      session_service:
+        type: "sql"
+        database_url: "sqlite:///market_agent_sessions.db"
+
+      agent_discovery:
+        enabled: true
+        interval_seconds: 10
+
+      # Subscribe to price and FX feeds
+      event_subscriptions:
+        - topic: "sam/procurement/market/raw-material/>"
+          description: "Raw material price updates"
+        - topic: "sam/procurement/market/fx/>"
+          description: "FX rate changes"
+        - topic: "sam/procurement/market/freight/>"
+          description: "Freight and shipping surcharges"
+
+      # Publish enriched signals
+      event_publications:
+        - topic: "sam/procurement/market/signals/{material}"
+          description: "Enriched market signals per material"
+        - topic: "sam/procurement/market/alerts"
+          description: "Price shock and buy window alerts"
+
+      tools:
+        - name: "price_analysis"
+          type: "custom"
+          config:
+            lookback_periods: [7, 30, 90]
+            shock_threshold_pct: 8.0
+            momentum_window_days: 5
+
+      agent_card:
+        instructions: |
+          You are the Market Intelligence Agent for the procurement team's procurement team.
+
+          ROLE:
+          - Monitor commodity price feeds for natural raw materials
+          - Track EUR/USD and EUR/MAD FX impacts on sourcing costs
+          - Detect unusual price movements and short-term momentum shifts
+          - Identify favorable buying windows based on price analysis
+
+          MATERIALS YOU TRACK:
+          - Argan oil (Morocco) — volatile, weather-sensitive
+          - Shea butter (West Africa) — seasonal, moderate volatility
+          - Rose extract (Bulgaria/Morocco) — very seasonal, harvest-dependent
+          - Jojoba oil (USA) — relatively stable
+          - Vanilla (Madagascar) — extremely volatile, geopolitical risk
+          - Palmarosa oil (India) — monsoon-dependent
+
+          ANALYSIS APPROACH:
+          1. When you receive a price update, compare to 7-day, 30-day, and 90-day averages
+          2. Calculate short-term momentum (5-day trend direction and magnitude)
+          3. Flag "price shock" if movement exceeds 8% in 7 days
+          4. Flag "favorable buy window" if price is >5% below 30-day average with stable/declining momentum
+          5. Consider FX impact on EUR-equivalent cost
+
+          OUTPUT FORMAT:
+          Always produce structured JSON events with:
+          - material: string
+          - signal_type: "price_update" | "price_shock" | "buy_window" | "trend_change"
+          - current_price_eur: number
+          - change_7d_pct: number
+          - change_30d_pct: number
+          - momentum: "rising" | "stable" | "declining"
+          - fx_impact: string (brief note on FX effect)
+          - confidence: 0.0-1.0
+          - summary: string (1-2 sentence human-readable summary)
+
+          Be precise and data-driven. Avoid speculation. State confidence levels clearly.
