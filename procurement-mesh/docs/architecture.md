@@ -1,8 +1,8 @@
-# Architecture — Rocher Procurement Intelligence Mesh
+# Architecture — NaturaCo Procurement Intelligence Mesh
 
 ## Overview
 
-The system is an event-driven, multi-agent architecture built on **Solace Agent Mesh** (SAM). Three specialized AI agents collaborate over a **Solace PubSub+** event broker to provide real-time procurement intelligence for Groupe Rocher's raw-material purchasing team.
+The system is an event-driven, multi-agent architecture built on **Solace Agent Mesh** (SAM). Three specialized AI agents collaborate over a **Solace PubSub+** event broker to provide real-time procurement intelligence for NaturaCo's raw-material purchasing team.
 
 ## System Architecture
 
@@ -37,7 +37,7 @@ The system is an event-driven, multi-agent architecture built on **Solace Agent 
               │   (Event Mesh Backbone)     │
               │                             │
               │   Topics:                   │
-              │   rocher/procurement/        │
+              │   naturaco/procurement/        │
               │   ├── market/*              │
               │   ├── risk/*                │
               │   ├── advice/*              │
@@ -82,11 +82,11 @@ The system is an event-driven, multi-agent architecture built on **Solace Agent 
 
 Agents communicate **asynchronously** over Solace topics using the A2A (Agent-to-Agent) pattern:
 
-1. **Price Feed Simulator** publishes raw price data to `rocher/procurement/market/raw-material/{material}`
-2. **Market Intelligence Agent** subscribes, enriches with analytics, publishes to `rocher/procurement/market/signals/{material}`
-3. **Risk Feed Simulator** publishes risk events to `rocher/procurement/risk/{type}/{region}`
-4. **Risk & Web Intelligence Agent** subscribes, researches via Gemini/web, publishes to `rocher/procurement/risk/material/{material}`
-5. **Procurement Advisor Agent** subscribes to both signal streams, combines with historical data, publishes to `rocher/procurement/advice/recommendations`
+1. **Price Feed Simulator** publishes raw price data to `naturaco/procurement/market/raw-material/{material}`
+2. **Market Intelligence Agent** subscribes, enriches with analytics, publishes to `naturaco/procurement/market/signals/{material}`
+3. **Risk Feed Simulator** publishes risk events to `naturaco/procurement/risk/{type}/{region}`
+4. **Risk & Web Intelligence Agent** subscribes, researches via Gemini/web, publishes to `naturaco/procurement/risk/material/{material}`
+5. **Procurement Advisor Agent** subscribes to both signal streams, combines with historical data, publishes to `naturaco/procurement/advice/recommendations`
 6. **Procurement API** bridges all events to the UI via SSE
 
 This is fully decoupled: any agent can be replaced, scaled, or upgraded independently.

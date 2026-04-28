@@ -17,13 +17,13 @@ export default function App() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
-              <Leaf className="w-6 h-6 text-rocher-700" />
+              <Leaf className="w-6 h-6 text-brand-700" />
               <div>
                 <h1 className="text-base font-bold text-gray-900 leading-tight">
-                  Solace + Gemini Agents Collaborate on Event Mesh
+                  NaturaCo · Procurement Intelligence
                 </h1>
                 <p className="text-[10px] text-gray-400 -mt-0.5">
-                  Procurement Intelligence · Powered by Solace Agent Mesh · Real-time
+                  Solace Agent Mesh · Gemini · GPT-4o · Real-time
                 </p>
               </div>
             </div>
@@ -36,7 +36,7 @@ export default function App() {
                   end={to === "/"}
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive ? "bg-rocher-50 text-rocher-700" : "text-gray-600 hover:bg-gray-100"
+                      isActive ? "bg-brand-50 text-brand-700" : "text-gray-600 hover:bg-gray-100"
                     }`
                   }
                 >

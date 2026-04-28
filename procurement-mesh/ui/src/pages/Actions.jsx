@@ -25,7 +25,7 @@ const ACTION_TYPES = [
     label: "Create Purchase Request",
     description: "Generate a purchase request for SAP / ERP integration",
     icon: Package,
-    color: "text-rocher-700",
+    color: "text-brand-700",
   },
   {
     type: "schedule_review",
@@ -143,7 +143,7 @@ export default function Actions() {
                 <Icon className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <p className="font-medium text-gray-900 group-hover:text-rocher-700 transition-colors">
+                <p className="font-medium text-gray-900 group-hover:text-brand-700 transition-colors">
                   {label}
                 </p>
                 <p className="text-sm text-gray-500 mt-0.5">{description}</p>
@@ -216,7 +216,7 @@ export default function Actions() {
           and the procurement team's workflow tools. The event is published to
           the Solace mesh on{" "}
           <code className="text-xs bg-gray-200 px-1 rounded">
-            rocher/procurement/actions/*
+            naturaco/procurement/actions/*
           </code>{" "}
           so any downstream system can subscribe.
         </p>

@@ -84,7 +84,7 @@ export default function EventStream() {
             onClick={() => setFilter(key)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               filter === key
-                ? "bg-rocher-700 text-white"
+                ? "bg-brand-700 text-white"
                 : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
             }`}
           >

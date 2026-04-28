@@ -1,6 +1,6 @@
 # Enterprise Integration Notes
 
-This document describes how the demo architecture maps to production integration with Groupe Rocher's enterprise systems.
+This document describes how the demo architecture maps to production integration with NaturaCo's enterprise systems.
 
 ## Integration Points
 
@@ -8,11 +8,11 @@ This document describes how the demo architecture maps to production integration
 
 **Demo**: Buyer clicks "Create Purchase Request" → event published to Solace topic
 **Production**:
-- SAP MM subscribes to `rocher/procurement/actions/create_purchase_request`
+- SAP MM subscribes to `naturaco/procurement/actions/create_purchase_request`
 - Converts recommendation into SAP Purchase Requisition (ME51N)
 - Approval workflow triggers based on value thresholds
 - Purchase order created automatically for pre-approved amounts
-- Confirmation event published back to mesh: `rocher/procurement/erp/po_created`
+- Confirmation event published back to mesh: `naturaco/procurement/erp/po_created`
 
 **Connection method**: SAP AEM (Advanced Event Mesh) connector or Solace SAP integration adapter
 
@@ -21,7 +21,7 @@ This document describes how the demo architecture maps to production integration
 **Demo**: Historical contracts loaded from JSON
 **Production**:
 - Contract data streamed from Ariba/Coupa to Solace topics
-- Contract expiry events auto-generated: `rocher/procurement/contracts/expiring/{material}`
+- Contract expiry events auto-generated: `naturaco/procurement/contracts/expiring/{material}`
 - Procurement Advisor Agent subscribes to contract events
 - Renegotiation recommendations include live contract terms
 - New contracts can be initiated via event back to Ariba
@@ -41,7 +41,7 @@ This document describes how the demo architecture maps to production integration
 | **ICIS** | Chemical/ingredient pricing | API polling → Solace publish |
 | **Mintec** | Food ingredient benchmarks | API → Solace adapter |
 
-Each provider publishes to `rocher/procurement/market/raw-material/{material}` using the same payload schema — the Market Intelligence Agent doesn't need to change.
+Each provider publishes to `naturaco/procurement/market/raw-material/{material}` using the same payload schema — the Market Intelligence Agent doesn't need to change.
 
 ### 4. Weather & Climate Data
 
@@ -55,7 +55,7 @@ Each provider publishes to `rocher/procurement/market/raw-material/{material}` u
 | **Weather.com** | Severe weather alerts | Webhook → Solace Event Mesh Gateway |
 | **aWhere** | Agricultural weather intelligence | API → Solace adapter |
 
-Weather events publish to `rocher/procurement/risk/weather/{region}`.
+Weather events publish to `naturaco/procurement/risk/weather/{region}`.
 
 ### 5. Geopolitical & News Intelligence
 
@@ -84,7 +84,7 @@ The Gemini-powered Risk & Web Intelligence Agent can use web search in productio
 | **Freightos** | Freight rate benchmarks | API polling → Solace |
 | **project44** | Visibility platform | API → Solace adapter |
 
-Events publish to `rocher/procurement/risk/logistics/{region}`.
+Events publish to `naturaco/procurement/risk/logistics/{region}`.
 
 ### 7. Internal Procurement Applications
 

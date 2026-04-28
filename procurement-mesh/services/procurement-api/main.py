@@ -45,7 +45,7 @@ logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 logger = logging.getLogger("procurement-api")
 
 app = FastAPI(
-    title="Procurement Intelligence API",
+    title="NaturaCo Procurement Intelligence API",
     version="3.0.0",
 )
 
@@ -106,7 +106,7 @@ NEWS_ITEMS = [
     {"headline": "Moroccan dirham depreciates 1.2% against euro this week", "region": "morocco", "materials": ["argan_oil"], "severity": "moderate", "source": "Bank Al-Maghrib", "category": "Currency"},
     {"headline": "EU-Madagascar trade tensions: export agreements under review", "region": "madagascar", "materials": ["vanilla"], "severity": "moderate", "source": "Le Monde", "category": "Geopolitics"},
     {"headline": "FAO report: global shea production down 5% year-on-year", "region": "west_africa", "materials": ["shea_butter"], "severity": "moderate", "source": "FAO Rome", "category": "Market"},
-    {"headline": "European cosmetics brands ramp up summer lines — peak demand for argan and shea", "region": "europe", "materials": ["argan_oil", "shea_butter"], "severity": "moderate", "source": "Cosmetics Business", "category": "Market"},
+    {"headline": "NaturaCo summer range launch — peak demand expected for argan and shea", "region": "france", "materials": ["argan_oil", "shea_butter"], "severity": "moderate", "source": "LSA Commerce", "category": "Internal"},
     {"headline": "Air freight from India becomes competitive again after fuel surcharge drop", "region": "india", "materials": ["palmarosa_oil"], "severity": "low", "source": "Air Cargo News", "category": "Logistics"},
     {"headline": "Moroccan argan cooperatives report 30% lower nut yields", "region": "morocco", "materials": ["argan_oil"], "severity": "high", "source": "Cooperative Targanine", "category": "Supplier"},
     {"headline": "Political stability in Bulgaria: agricultural exports remain smooth", "region": "bulgaria", "materials": ["rose_extract"], "severity": "low", "source": "BTA Sofia", "category": "Geopolitics"},

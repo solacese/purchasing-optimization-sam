@@ -5,7 +5,7 @@ All events flow through the Solace PubSub+ broker using hierarchical topic addre
 ## Topic Hierarchy
 
 ```
-rocher/procurement/
+naturaco/procurement/
 ├── market/
 │   ├── raw-material/{material}     ← Price feed simulator
 │   ├── fx/{pair}                   ← FX rate simulator
@@ -145,12 +145,12 @@ rocher/procurement/
 
 | Agent | Subscribes To | Publishes To |
 |-------|--------------|-------------|
-| Market Intelligence | `rocher/procurement/market/raw-material/>` | `rocher/procurement/market/signals/{material}` |
-| | `rocher/procurement/market/fx/>` | `rocher/procurement/market/alerts` |
-| Risk & Web Intel | `rocher/procurement/risk/weather/>` | `rocher/procurement/risk/material/{material}` |
-| | `rocher/procurement/risk/geopolitics/>` | `rocher/procurement/risk/alerts` |
-| | `rocher/procurement/risk/logistics/>` | |
-| Procurement Advisor | `rocher/procurement/market/signals/>` | `rocher/procurement/advice/recommendations` |
-| | `rocher/procurement/market/alerts` | `rocher/procurement/advice/alerts` |
-| | `rocher/procurement/risk/material/>` | `rocher/procurement/advice/explanations` |
-| | `rocher/procurement/risk/alerts` | |
+| Market Intelligence | `naturaco/procurement/market/raw-material/>` | `naturaco/procurement/market/signals/{material}` |
+| | `naturaco/procurement/market/fx/>` | `naturaco/procurement/market/alerts` |
+| Risk & Web Intel | `naturaco/procurement/risk/weather/>` | `naturaco/procurement/risk/material/{material}` |
+| | `naturaco/procurement/risk/geopolitics/>` | `naturaco/procurement/risk/alerts` |
+| | `naturaco/procurement/risk/logistics/>` | |
+| Procurement Advisor | `naturaco/procurement/market/signals/>` | `naturaco/procurement/advice/recommendations` |
+| | `naturaco/procurement/market/alerts` | `naturaco/procurement/advice/alerts` |
+| | `naturaco/procurement/risk/material/>` | `naturaco/procurement/advice/explanations` |
+| | `naturaco/procurement/risk/alerts` | |

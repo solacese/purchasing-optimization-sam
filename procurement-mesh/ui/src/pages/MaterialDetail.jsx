@@ -125,7 +125,7 @@ export default function MaterialDetail() {
               return (
                 <div
                   key={i}
-                  className="flex-1 bg-rocher-400 rounded-t opacity-70 hover:opacity-100 transition-opacity"
+                  className="flex-1 bg-brand-400 rounded-t opacity-70 hover:opacity-100 transition-opacity"
                   style={{ height: `${Math.max(height, 4)}%` }}
                   title={`EUR ${p.price?.toFixed(2)}`}
                 />
@@ -274,7 +274,7 @@ export default function MaterialDetail() {
                 Export Summary
               </button>
               {actionStatus && (
-                <p className="text-xs text-center text-rocher-700 font-medium">
+                <p className="text-xs text-center text-brand-700 font-medium">
                   {actionStatus}
                 </p>
               )}

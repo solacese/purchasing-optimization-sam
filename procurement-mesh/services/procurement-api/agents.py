@@ -92,7 +92,7 @@ def _parse_json_from_response(text: str) -> dict | None:
 
 # ── English buying signal commentary ─────────────────────────────
 
-COMMENTARY_SYSTEM = """You are a senior procurement advisor for the procurement team.
+COMMENTARY_SYSTEM = """You are a senior procurement advisor for NaturaCo.
 You analyze market signals and supply-chain risks for natural raw materials.
 
 Give a concise, actionable buying signal in 1-2 sentences for the purchasing team.
@@ -126,7 +126,7 @@ async def generate_commentary(material: str, price: float, change_pct: float,
 # Each publishes its step as a separate SSE event so the UI can
 # render them appearing one by one.
 
-MARKET_COLLAB_SYSTEM = """You are the Market Intelligence Agent for the procurement team procurement.
+MARKET_COLLAB_SYSTEM = """You are the Market Intelligence Agent for NaturaCo procurement.
 Model: GPT-4o via Azure / Solace Agent Mesh
 
 Given a triggering event (news, price alert, or contract event), analyze:
@@ -149,7 +149,7 @@ Return JSON:
 Return ONLY the JSON object."""
 
 
-RISK_COLLAB_SYSTEM = """You are the Risk & Web Intelligence Agent for the procurement team procurement.
+RISK_COLLAB_SYSTEM = """You are the Risk & Web Intelligence Agent for NaturaCo procurement.
 Model: Gemini 2.5 Flash / Solace Agent Mesh
 
 Given a triggering event and the Market Intelligence Agent's analysis, assess:
@@ -173,13 +173,13 @@ Return JSON:
 Return ONLY the JSON object."""
 
 
-ADVISOR_COLLAB_SYSTEM = """You are the Procurement Advisor Agent for the procurement team.
+ADVISOR_COLLAB_SYSTEM = """You are the Procurement Advisor Agent for NaturaCo.
 Model: GPT-4o via Azure / Solace Agent Mesh
 
 Given a triggering event, the Market Intelligence analysis, and the Risk assessment, determine:
 1. RECOMMENDATION: buy_now | buy_partial | hold | hedge | diversify | escalate
 2. QUANTITY: Suggested % of quarterly forecast to secure now
-3. MARKET POTENTIAL: Can the market fulfill the company's order requirements? Score 1-10.
+3. MARKET POTENTIAL: Can the market fulfill NaturaCo's order requirements? Score 1-10.
 4. FULFILLMENT RISK: What % of the order could face delays or shortfall?
 5. TIMING: Best timing window for action
 6. RATIONALE: Clear explanation for the purchasing team
@@ -309,7 +309,7 @@ async def run_collaboration(trigger_event: dict, material: str,
 #
 # Three agents collaborate to assess whether an invoiced price is fair.
 
-INVOICE_MARKET_SYSTEM = """You are the Market Intelligence Agent for the procurement team procurement.
+INVOICE_MARKET_SYSTEM = """You are the Market Intelligence Agent for NaturaCo procurement.
 Model: GPT-4o via Azure / Solace Agent Mesh
 
 A buyer has received an invoice or price quote. Your job: determine the FAIR MARKET PRICE
@@ -337,7 +337,7 @@ Return JSON:
 Return ONLY the JSON object."""
 
 
-INVOICE_RISK_SYSTEM = """You are the Risk & Web Intelligence Agent for the procurement team procurement.
+INVOICE_RISK_SYSTEM = """You are the Risk & Web Intelligence Agent for NaturaCo procurement.
 Model: Gemini 2.5 Flash / Solace Agent Mesh
 
 A buyer is checking whether a supplier price is fair. Given the market analysis,
@@ -364,7 +364,7 @@ Return JSON:
 Return ONLY the JSON object."""
 
 
-INVOICE_ADVISOR_SYSTEM = """You are the Procurement Advisor Agent for the procurement team.
+INVOICE_ADVISOR_SYSTEM = """You are the Procurement Advisor Agent for NaturaCo.
 Model: GPT-4o via Azure / Solace Agent Mesh
 
 A buyer is reviewing a price from a supplier. Given the market fair price analysis and

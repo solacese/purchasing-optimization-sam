@@ -11,11 +11,11 @@ This scenario demonstrates a **BUY** recommendation driven by converging market 
 | 1 | T+0s | Price Feed Simulator | Argan oil price begins rising: EUR 45.00 → 46.20 (+2.7%) |
 | 2 | T+10s | Price Feed Simulator | Price continues: EUR 46.20 → 48.50 → 50.40 (+12% from baseline) |
 | 3 | T+15s | Market Intelligence Agent | Detects **price shock**: +12% in 10 days, momentum "rising" |
-| 4 | T+15s | Market Intelligence Agent | Publishes signal to `rocher/procurement/market/signals/argan_oil` |
+| 4 | T+15s | Market Intelligence Agent | Publishes signal to `naturaco/procurement/market/signals/argan_oil` |
 | 5 | T+20s | Risk Feed Simulator | Morocco weather event: below-average rainfall in Souss-Massa |
 | 6 | T+25s | Risk Feed Simulator | Escalation: drought officially declared — **severity: high** |
 | 7 | T+25s | Risk & Web Intel Agent (Gemini) | Researches web: confirms drought via AFP, Morocco Met Office, FAO |
-| 8 | T+30s | Risk & Web Intel Agent (Gemini) | Publishes enriched risk to `rocher/procurement/risk/material/argan_oil` |
+| 8 | T+30s | Risk & Web Intel Agent (Gemini) | Publishes enriched risk to `naturaco/procurement/risk/material/argan_oil` |
 | 9 | T+35s | Procurement Advisor Agent | Receives price shock + drought risk + checks inventory (5.3 wks) |
 | 10 | T+40s | Procurement Advisor Agent | Generates recommendation: **BUY_PARTIAL 35% (4,900 kg)** |
 | 11 | T+40s | UI | Dashboard updates in real time via SSE |
@@ -27,7 +27,7 @@ This scenario demonstrates a **BUY** recommendation driven by converging market 
 2. **Event Stream**: See the topic events flowing: blue (market) → purple (risk) → green (advice)
 3. **Material Detail**: Click into Argan Oil — see the price trend, risk alert, and full recommendation
 4. **Recommendation**: Highlight the rationale explaining WHY to buy, with signal sources
-5. **Action Panel**: Buyer takes action → event published to `rocher/procurement/actions/create_purchase_request`
+5. **Action Panel**: Buyer takes action → event published to `naturaco/procurement/actions/create_purchase_request`
 
 ---
 
@@ -76,7 +76,7 @@ This script plays both scenarios sequentially with appropriate pauses.
 # Scenario 1: Argan spike + drought
 curl -X POST http://localhost:8090/api/events/publish \
   -H "Content-Type: application/json" \
-  -d '{"topic":"rocher/procurement/market/raw-material/argan_oil","payload":{"event_type":"price_update","material":"argan_oil","price_eur_per_kg":50.40,"previous_price_eur":45.00,"change_pct":12.0,"momentum":"rising","timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}}'
+  -d '{"topic":"naturaco/procurement/market/raw-material/argan_oil","payload":{"event_type":"price_update","material":"argan_oil","price_eur_per_kg":50.40,"previous_price_eur":45.00,"change_pct":12.0,"momentum":"rising","timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}}'
 ```
 
 ### Demo Tips

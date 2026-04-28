@@ -122,7 +122,7 @@ function StepCard({ step, stepNum }) {
             {o.max_acceptable_price_eur != null && <div className="bg-white rounded-lg p-3 text-center"><p className="text-gray-400 text-[10px] mb-1">Max Acceptable</p><p className="text-xl font-bold text-gray-900">{o.max_acceptable_price_eur?.toFixed(2)}<span className="text-sm font-normal text-gray-400"> €</span></p></div>}
             {o.savings_potential_eur_per_kg != null && o.savings_potential_eur_per_kg > 0 && <div className="bg-white rounded-lg p-3 text-center"><p className="text-gray-400 text-[10px] mb-1">Savings Potential</p><p className="text-xl font-bold text-green-600">{o.savings_potential_eur_per_kg?.toFixed(2)}<span className="text-sm font-normal text-gray-400"> €/kg</span></p></div>}
           </div>
-          {o.negotiation_points?.length > 0 && <div className="bg-white rounded-lg p-3 space-y-1.5"><p className="text-[10px] font-semibold text-gray-500 uppercase">Negotiation points:</p>{o.negotiation_points.map((p, i) => <p key={i} className="text-sm text-gray-800 flex items-start gap-2"><span className="text-rocher-600 font-bold shrink-0">{i + 1}.</span>{p}</p>)}</div>}
+          {o.negotiation_points?.length > 0 && <div className="bg-white rounded-lg p-3 space-y-1.5"><p className="text-[10px] font-semibold text-gray-500 uppercase">Negotiation points:</p>{o.negotiation_points.map((p, i) => <p key={i} className="text-sm text-gray-800 flex items-start gap-2"><span className="text-brand-600 font-bold shrink-0">{i + 1}.</span>{p}</p>)}</div>}
           {o.timing_advice && <p className="text-xs text-gray-500 bg-white rounded-lg p-2 italic">{o.timing_advice}</p>}
           {o.rationale && <div className="bg-white rounded-xl p-4 border border-green-200"><p className="text-[10px] font-semibold text-gray-400 uppercase mb-1">Full Rationale</p><p className="text-sm text-gray-800 leading-relaxed">{o.rationale}</p></div>}
         </div>
@@ -199,7 +199,7 @@ export default function InvoiceCheck() {
     <div className="space-y-6 max-w-4xl mx-auto">
       <div>
         <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-          <FileCheck className="w-5 h-5 text-rocher-700" />
+          <FileCheck className="w-5 h-5 text-brand-700" />
           Invoice Fairness Check
         </h2>
         <p className="text-sm text-gray-500 mt-0.5">
@@ -208,7 +208,7 @@ export default function InvoiceCheck() {
       </div>
 
       {/* Upload zone */}
-      <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-dashed border-gray-200 hover:border-rocher-300 transition-colors">
+      <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-dashed border-gray-200 hover:border-brand-300 transition-colors">
         <label className="flex items-center gap-4 cursor-pointer">
           <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center shrink-0">
             {uploadLoading ? <Loader2 className="w-6 h-6 text-gray-400 animate-spin" /> : <Upload className="w-6 h-6 text-gray-400" />}
@@ -231,14 +231,14 @@ export default function InvoiceCheck() {
           </div>
           {uploadItems.items.map((item, i) => (
             <button key={i} onClick={() => selectUploadItem(item)}
-              className="w-full text-left bg-gray-50 hover:bg-rocher-50 rounded-lg p-3 transition-colors flex items-center justify-between">
+              className="w-full text-left bg-gray-50 hover:bg-brand-50 rounded-lg p-3 transition-colors flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-900">{item.material}</p>
                 <p className="text-xs text-gray-500">{item.supplier || "Unknown supplier"}{item.quantity_kg ? ` · ${item.quantity_kg} kg` : ""}</p>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-gray-900">{item.price_eur_per_kg?.toFixed(2)} <span className="text-xs font-normal text-gray-400">€/kg</span></p>
-                <p className="text-[10px] text-rocher-600">Click to check fairness</p>
+                <p className="text-[10px] text-brand-600">Click to check fairness</p>
               </div>
             </button>
           ))}
@@ -253,12 +253,12 @@ export default function InvoiceCheck() {
             <input type="text" value={material} onChange={(e) => { setMaterial(e.target.value); setShowSuggestions(true); }}
               onFocus={() => setShowSuggestions(true)} onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               placeholder="Type any material — e.g. Argan Oil, Coconut Oil, Beeswax..." required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rocher-500 focus:border-rocher-500" />
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
             {showSuggestions && filteredSuggestions.length > 0 && (
               <div className="absolute z-10 top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto">
                 {filteredSuggestions.map((s) => (
                   <button key={s} type="button" onMouseDown={() => { setMaterial(s); setShowSuggestions(false); }}
-                    className="w-full text-left px-3 py-2 text-sm hover:bg-rocher-50 text-gray-700">{s}</button>
+                    className="w-full text-left px-3 py-2 text-sm hover:bg-brand-50 text-gray-700">{s}</button>
                 ))}
               </div>
             )}
@@ -267,19 +267,19 @@ export default function InvoiceCheck() {
             <label className="block text-xs font-medium text-gray-600 mb-1">Invoiced Price (EUR/kg) *</label>
             <input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)}
               placeholder="e.g. 52.80" required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rocher-500 focus:border-rocher-500" />
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Supplier (optional)</label>
             <input type="text" value={supplier} onChange={(e) => setSupplier(e.target.value)}
               placeholder="e.g. Cooperative Targanine"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rocher-500 focus:border-rocher-500" />
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Quantity (kg, optional)</label>
             <input type="number" step="1" value={quantity} onChange={(e) => setQuantity(e.target.value)}
               placeholder="e.g. 5000"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rocher-500 focus:border-rocher-500" />
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
           </div>
         </div>
         <div className="flex items-center justify-between">
@@ -297,7 +297,7 @@ export default function InvoiceCheck() {
       {/* Loading */}
       {loading && (
         <div className="bg-white rounded-xl shadow-sm p-8 text-center space-y-3">
-          <Loader2 className="w-8 h-8 text-rocher-600 animate-spin mx-auto" />
+          <Loader2 className="w-8 h-8 text-brand-600 animate-spin mx-auto" />
           <p className="text-sm text-gray-600 font-medium">Three agents analyzing your invoice...</p>
           <div className="flex items-center justify-center gap-6 text-xs text-gray-400">
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />Market Intel (GPT-4o)</span>
@@ -339,7 +339,7 @@ export default function InvoiceCheck() {
               const vc = advisor?.verdict ? VERDICT_CONFIG[advisor.verdict] : null;
               return (
                 <button key={h.thread_id} onClick={() => setResult(h)}
-                  className={`w-full text-left bg-white rounded-lg shadow-sm p-3 hover:shadow-md transition-all ${result?.thread_id === h.thread_id ? "ring-2 ring-rocher-500" : ""}`}>
+                  className={`w-full text-left bg-white rounded-lg shadow-sm p-3 hover:shadow-md transition-all ${result?.thread_id === h.thread_id ? "ring-2 ring-brand-500" : ""}`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{h.material}</span>

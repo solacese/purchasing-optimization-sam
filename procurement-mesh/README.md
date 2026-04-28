@@ -1,12 +1,12 @@
-# Rocher Procurement Mesh
+# NaturaCo Procurement Mesh
 
-**AI-powered procurement intelligence for Groupe Rocher's raw-material purchasing team.**
+**AI-powered procurement intelligence for NaturaCo's raw-material purchasing team.**
 
 Built on [Solace Agent Mesh](https://github.com/SolaceLabs/solace-agent-mesh) — an event-driven multi-agent architecture that coordinates specialized AI agents over the Solace event broker.
 
 ## What It Does
 
-The purchasing team at Groupe Rocher buys natural raw materials (Argan oil, Shea butter, Rose extract, Vanilla, etc.) directly on the market. This system provides real-time intelligence to help buyers decide **what**, **when**, and **how much** to buy.
+The purchasing team at NaturaCo buys natural raw materials (Argan oil, Shea butter, Rose extract, Vanilla, etc.) directly on the market. This system provides real-time intelligence to help buyers decide **what**, **when**, and **how much** to buy.
 
 Three specialized agents collaborate over the Solace event mesh:
 
@@ -44,9 +44,9 @@ Three specialized agents collaborate over the Solace event mesh:
 ```
 
 All agents communicate asynchronously via Solace topics:
-- `rocher/procurement/market/*` — price data, FX, signals
-- `rocher/procurement/risk/*` — weather, geopolitics, alerts
-- `rocher/procurement/advice/*` — recommendations, explanations
+- `naturaco/procurement/market/*` — price data, FX, signals
+- `naturaco/procurement/risk/*` — weather, geopolitics, alerts
+- `naturaco/procurement/advice/*` — recommendations, explanations
 
 ## Quick Start
 
@@ -60,7 +60,7 @@ All agents communicate asynchronously via Solace topics:
 ### 1. Clone & Configure
 
 ```bash
-cd rocher-procurement-mesh
+cd naturaco-procurement-mesh
 cp .env.example .env
 # Edit .env with your API keys
 ```
@@ -113,7 +113,7 @@ This plays a scripted sequence:
 ## Project Structure
 
 ```
-rocher-procurement-mesh/
+naturaco-procurement-mesh/
 ├── README.md
 ├── docker-compose.yml
 ├── .env.example

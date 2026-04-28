@@ -10,8 +10,8 @@ const AGENT_STYLES = {
     label: "Risk Intel (Gemini)",
   },
   ProcurementAdvisorAgent: {
-    bg: "bg-rocher-100",
-    text: "text-rocher-800",
+    bg: "bg-brand-100",
+    text: "text-brand-800",
     label: "Procurement Advisor",
   },
   BuyerUI: {

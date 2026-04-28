@@ -286,10 +286,10 @@ export default function AgentCollaboration() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <GitBranch className="w-5 h-5 text-rocher-700" />
+            <GitBranch className="w-5 h-5 text-brand-700" />
             Agent Collaboration
           </h2>
-          <p className="text-sm text-gray-500 mt-0.5">Solace + Gemini agents collaborate on event mesh — determining fair price, supply chain risk, and market potential to fulfil orders</p>
+          <p className="text-sm text-gray-500 mt-0.5">Gemini + GPT-4o agents collaborating over Solace Event Mesh to determine fair price, supply chain risk, and market fulfillment potential for NaturaCo</p>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <span className={`w-1.5 h-1.5 rounded-full ${connected ? "bg-green-400" : "bg-red-400"}`} />
@@ -339,7 +339,7 @@ export default function AgentCollaboration() {
                   key={t.thread_id}
                   onClick={() => setSelectedThread(t)}
                   className={`w-full text-left bg-white rounded-lg shadow-sm p-3 transition-all hover:shadow-md ${
-                    selectedThread?.thread_id === t.thread_id ? "ring-2 ring-rocher-500" : ""
+                    selectedThread?.thread_id === t.thread_id ? "ring-2 ring-brand-500" : ""
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">

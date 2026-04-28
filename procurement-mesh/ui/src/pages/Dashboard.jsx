@@ -136,7 +136,7 @@ export default function Dashboard() {
             <div className="space-y-2">
               {materials.filter(m => m.commentary).map((m) => (
                 <div key={m.material} className="bg-white rounded-lg shadow-sm p-3 flex items-start gap-3 event-enter">
-                  <div className="w-8 h-8 rounded-full bg-rocher-100 flex items-center justify-center shrink-0 mt-0.5"><Bot className="w-4 h-4 text-rocher-700" /></div>
+                  <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-0.5"><Bot className="w-4 h-4 text-brand-700" /></div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
                       <span className="text-xs font-semibold text-gray-900">{MAT_NAMES[m.material]}</span>
